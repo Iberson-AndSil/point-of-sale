@@ -1,0 +1,113 @@
+<section class="product">
+    <div class="product__search">
+        <input #searchInput class="product__input" type="text" [(ngModel)]="searchTerm" placeholder="Buscar"
+            (focus)="selectText($event)" (keyup.enter)="onSearch(searchInput)"/>
+        <button class="product__button product__button--search" (click)="onSearch(searchInput)">
+            <svg class="product__icon-search">
+                <use xlink:href="/images/icons.svg#search"></use>
+            </svg>
+        </button>
+    </div>
+    <div class="product__actions">
+        <button class="product__button product__button--actions" (click)="loadProducts()">
+            <svg class="product__icon">
+                <use xlink:href="/images/icons.svg#icon-load" />
+            </svg>
+        </button>
+        <button class="product__button product__button--actions" (click)="changeContent()" *ngIf="showContent">
+            <svg class="product__icon">
+                <use xlink:href="/images/icons.svg#icon-list" />
+            </svg>
+        </button>
+        <button class="product__button product__button--actions" (click)="changeContent()" *ngIf="!showContent">
+            <svg class="product__icon">
+                <use xlink:href="/images/icons.svg#icon-grid" />
+            </svg>
+        </button>
+    </div>
+    <div class="product__view">
+        <div *ngIf="!showContent">
+            <div class="product__list">
+                <div *ngFor="let product of product" class="product__list-item">
+                    <div class="product__container" (click)="openProductDialog(product)">
+                        <p class="product__property">{{ product.name }}</p> 
+                        <div class="product__price">
+                            <p class="product__property product__property--color">{{ product.unitprice }}</p>
+                            <p class="product__property">{{ product.unitmeasure }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="showContent">
+            <div class="product__block">
+                <div class="product__item" *ngFor="let element of product">
+                    <mat-card class="product__card" (click)="openProductDialog(element)">
+                        <mat-card-header class="header">
+                            <img [src]="element.image" alt="Imagen" class="product-image">
+                            <div class="price">
+                                <p class="product__property product__property--color">{{ element.unitprice }}</p>
+                                <p class="product__property">{{ element.unitmeasure }}</p>
+                            </div>
+                        </mat-card-header>
+                        <mat-card-content>
+                            <span>{{ element.name }}</span>
+                        </mat-card-content>
+                    </mat-card>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="product.length === 0" class="product__no-results">
+        <p>No se encontraron productos.</p>
+    </div>
+    <div class="product__bottom" (click)="bottomCount()">
+        <p>Ver {{ trx.details.length }} Artículos Seleccionados</p>
+    </div>
+</section>
+
+<app-notification #notification></app-notification>
+
+<div class="dialog__overlay" *ngIf="showDialogProduct"></div>
+<section class="dialog" *ngIf="showDialogProduct">
+    <div class="dialog__header">
+        <button class="dialog__button-close" (click)="closeProductDialog()">
+            <svg class="dialog__icon">
+                <use xlink:href="/images/icons.svg#close"></use>
+            </svg>
+        </button>
+    </div>
+    <div class="dialog__body">
+        <div class="dialog__form-row">
+            <div class="dialog__field-group">
+                <label class="dialog__label" for="cantidad">Cantidad</label>
+                <div class="details__amount">
+                    <button class="button__increment" (click)="decreaseQuantity()">&#9660;</button>
+                    <input #mainInput class="dialog__input-dialog text-centered" type="number" [(ngModel)]="quantity" min="1"
+                        (focus)="selectText($event)" (keyup.enter)="onEnter(mainInput)"/>
+                    <button class="button__increment" (click)="increaseQuantity()">&#9650;</button>
+                </div>
+            </div>
+            <label class="dialog__label dialog__label--size" for="NIUx">
+                <p>NIU x</p>
+            </label>
+            <div class="dialog__field-group">
+                <label class="dialog__label" for="title">Precio</label>
+                <input #priceInput class="dialog__input-dialog text-centered" type="number" [(ngModel)]="detailEdit!.product.unitprice"
+                    (focus)="selectText($event)" (keyup.enter)="onEnter(priceInput)"/>
+            </div>
+        </div>
+        <div class="dialog__form">
+            <label class="dialog__label" for="title">Nombre</label>
+            <input class="dialog__input" type="text" [(ngModel)]="detailEdit!.product.name" disabled />
+        </div>
+        <div class="dialog__actions">
+            <button class="dialog__button dialog__button--set" (click)="saveChanges()">
+                <svg class="dialog__icon">
+                    <use xlink:href="/images/icons.svg#save"></use>
+                </svg>
+                Agregar
+            </button>
+        </div>
+    </div>
+</section>

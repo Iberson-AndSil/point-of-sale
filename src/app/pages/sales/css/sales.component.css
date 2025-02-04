@@ -1,0 +1,83 @@
+@import url("./components/dialog.css");
+@import url("./components/sales.css");
+@import url("./components/change.css");
+
+.scanner {
+  position: static;
+  height: auto;
+  width: 100%;
+}
+
+.details {
+  position: static;
+  height: 85%;
+  width: 100%;
+  top: 0;
+}
+
+.products {
+  position: static;
+  height: 95%;
+  width: 100%;
+  top: 0;
+}
+
+.details__button-container {
+  display: flex;
+  justify-content: space-between;
+  bottom: 0;
+  position: absolute;
+  width: 100%;
+}
+
+.details__button {
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+  color: white;
+  padding-top: .8rem;
+  padding-bottom: .8rem;
+  bottom: 0;
+}
+
+.details__button--annular {
+  background-color: #dddada;
+  width: 50%;
+}
+
+.details__label {
+  font-size: 1rem;
+  color: #3d3d3d;
+}
+
+.details__button--configure {
+  background-color: #2686FE;
+  width: 50%;
+}
+
+.details__container {
+  height: 52%;
+  overflow-y: auto;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.details__none {
+  font-size: 1rem;
+  color: #989898;
+}
+
+.vaucher {
+  height: 91%; 
+  width: 100%;
+  position: relative;
+  font-size: 14px;
+  display: flex;
+  justify-content: center;
+}
+
+@media print {
+  .no-print {
+      display: none;
+  }
+}

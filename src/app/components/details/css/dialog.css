@@ -1,0 +1,317 @@
+.dialog__overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.2);
+    z-index: 999;
+}
+
+.dialog {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+    max-width: 400px;
+    width: 85%;
+    max-height: 80vh;
+    padding: 10px;
+    overflow-y: auto;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+.dialog__text {
+    font-size: 14px;
+    text-align: justify;
+}
+
+.dialog__client {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+    max-width: 400px;
+    width: 85%;
+    /* max-height: 80vh; */
+    height: 45%;
+    padding: 10px;
+    overflow-y: auto;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.dialog__header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    height: 2.5rem;
+}
+
+.dialog__title {
+    font-size: 16px;
+}
+
+.dialog__button-close {
+    border: none;
+    cursor: pointer;
+    color: white;
+    background-color: var(--color-red);
+    border-radius: 25px;
+    height: 2rem;
+    width: 2rem;
+    display: flex;
+}
+
+.dialog__button-add {
+    
+}
+
+.dialog__icon--add {
+
+}
+
+.dialog__icon--modifier {
+    fill: white;
+    width: 2rem;
+    height: 2rem;
+}
+
+.dialog__close {
+    display: flex;
+    flex-direction: row;
+    justify-content: end;
+    align-items: center;
+    height: 2.5rem;
+}
+
+.dialog__icon {
+    display: flex;
+    text-align: end;
+    /* fill: white; */
+  }
+
+.dialog__body {
+    height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 1rem;
+    gap: 1rem;
+}
+
+.dialog__body--client {
+    height: 75%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 1rem;
+    gap: 1rem;
+}
+
+.dialog__form {
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    width: 95%;
+  }
+
+.dialog__form-row {
+    display: flex;
+    width: 100%;
+}
+
+.dialog__form--display {
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    width: 100%;
+    height: 100%;
+}
+
+.details__form--display {
+    top: 0;
+}
+
+.dialog__field-group {
+    flex: 1;
+}
+
+.dialog__label {
+    display: flex;
+    font-size: 16px;
+}
+
+.dialog__label--size {
+    flex: 1;
+    justify-content: center;
+}
+
+.dialog__input {
+    border: none;
+    border-bottom: 2px solid var(--color-blue);
+    outline: none;
+    height: auto;
+    padding: 5px;
+    width: 95%;
+    font-size: 14px;
+  }  
+  
+.dialog__input-dialog {
+    border: none;
+    border-bottom: 2px solid var(--color-blue);
+    outline: none;
+    height: auto;
+    padding: 5px;
+    width: 82%;
+    font-size: 16px;
+}
+
+.dialog__button {
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    color: white;
+    padding-top: .8rem;
+    padding-bottom: .8rem;
+    bottom: 0;
+}
+
+.dialog__button--set {
+    margin: .5rem;
+    width: 50%;
+    background-color: var(--color-blue);
+    padding: 1rem;
+    height: 6.8vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+}
+
+.dialog__button--clean {
+    margin: .5rem;
+    width: 100%;
+    background-color: var(--color-blue);
+    padding: 1rem;
+    height: 6.8vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+}
+
+
+.dialog__button--red {
+    margin: .5rem;
+    width: 50%;
+    background-color: var(--color-griss);
+    padding: 1rem;
+    height: 6.8vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+}
+
+
+.dialog__actions {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+
+.button__increment {
+    all: unset;
+    cursor: pointer;
+    border: 1px solid var(--color-blue);
+    color: var(--color-blue);
+    height: 1.2rem;
+    width: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.2rem;
+    padding: 2px;
+}
+
+.details__product {
+    
+}
+
+.details__select:focus {
+    outline: none;
+    border-color: #007bff;
+}
+
+.details__amount {
+    text-align: end;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+  .details__input-group {
+    display: flex;
+    align-items: center;
+    position: relative;
+    justify-content: space-between;
+    width: 100%;
+  }
+  
+  .details__input {
+    width: 100%;
+    padding: 8px;
+  }
+  
+  .details__dropdown-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+    font-size: 1.2rem;
+    color: #7e7e7e;
+  }
+  
+  .details__dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: white;
+    border: 1px solid #ccc;
+    width: 100%;
+    z-index: 10;
+  }
+  
+  .details__dropdown-option {
+    padding: 8px;
+    cursor: pointer;
+  }
+  
+  .details__dropdown-option:hover {
+    background-color: #f0f0f0;
+  }
+  
+  .dialog__input-form {
+    border: none;
+    /* border-bottom: 2px solid #007BFF; */
+    outline: none;
+    height: auto;
+    padding: 5px;
+    width: 100%;
+    font-size: 14px;
+}

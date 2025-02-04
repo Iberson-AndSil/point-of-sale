@@ -1,0 +1,161 @@
+@media print {
+    body {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+    }
+      
+    #print-invoice {
+        width: 100%;
+        /* font-size: 12px; */
+        transform: scale(1.2);
+        transform-origin:left bottom right;
+        margin-left: 0.5em;
+    }
+  }
+
+.container {
+    width: 100%;
+    height: 92%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow-y: auto;
+    overflow-x: hidden;
+    box-sizing: border-box;
+}
+
+.voucher__nav {
+    width: 80%;
+    margin-top: 10px;
+    text-align: center;
+}
+
+.voucher__label {
+    margin: 5px;
+    font-size: .8rem;
+}
+
+.voucher__label-top {
+    font-size: 1rem;
+    margin: .5rem;
+}
+
+.voucher__header {
+    display: flex;
+    flex-direction: row;
+    border-top: solid black 1px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    font-size: .8rem;
+}
+
+.voucher__unit{
+    width: 15%;
+    margin: 0;
+}
+
+.voucher__detail{
+    width: 60%;
+    margin: 0;
+}
+
+.voucher__info {
+    text-align: start;
+    padding: 10px;
+    width: 80%;
+}
+
+.voucher__foot-signature {
+    margin: 3rem 0 0;
+    text-align: center;
+    line-height: 1.6;
+}
+
+.voucher__foot-according {
+    margin: 0 0 0;
+    font-size: 0.7rem;
+    text-align: center;
+    line-height: 1.6;
+}
+
+.voucher__foot-name {
+    margin: 0 0 1em;
+    font-size: 0.7rem;
+    text-align: center;
+    line-height: 1.6;
+}
+
+.voucher__debt {
+    display: flex;
+    flex-direction: column;
+    border-top: solid black 1px;
+    font-size: .8rem;
+}
+
+.voucher__pie {
+    display: flex;
+    justify-content: space-between;
+}
+
+.voucher_toText{
+    border-top: solid black 1px;
+    border-bottom: solid black 1px;
+    text-align: center;
+}
+
+.voucher__foot {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+}
+
+.voucher__foot-text{
+    font-size: 1rem;
+    margin: 0 0 0;
+}
+
+.voucher__product {
+    margin-top: 1rem;
+    padding: 0.7rem;
+    margin: 5px;
+    display: flex;
+    align-items: center;
+    height: 3rem;
+    justify-content: space-between;
+}
+
+.details__button-container {
+    display: flex;
+    justify-content: space-between;
+    bottom: 0;
+    position: absolute;
+    width: 100%;
+}
+
+.details__button {
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    color: white;
+    padding-top: .8rem;
+    padding-bottom: .8rem;
+    bottom: 0;
+}
+
+.details__button--select {
+    background-color: #7b7b7b;
+    width: 50%;
+}
+
+.details__button--configure {
+    background-color: #2686FE;
+    width: 50%;
+}
+
+.details__button--annular {
+    background-color: var(--color-griss);
+    color: white;
+    width: 50%;
+}

@@ -1,0 +1,393 @@
+<!-- Bloque -->
+<div class="product"> 
+    <ng-container *ngIf="trx.details!.length; else noProducts">
+        <!-- Elementos -->
+        <div *ngFor="let detail of trx.details!" class="product__list">
+            <div class="product__details" (click)="openProductDialog(detail)">
+                <p class="product__label">{{ detail!.product.name }}</p>
+                <div class="product__price">
+                    <p class="product__newPrice">{{ detail!.newPrice }}</p>
+                    <p class="product__label">{{detail!.quantity}} {{
+                        detail!.product.unitmeasure }} x {{detail!.product.unitprice}}
+                    </p>
+                </div>
+            </div>
+        </div>
+    </ng-container> 
+    <ng-template #noProducts>
+        <div class="product__none">
+            <i>¡Aún no hay productos seleccionados!</i>
+        </div>
+    </ng-template>
+</div>
+
+<div class="details">
+    <div class="details__seller">
+        <p class="details__label">{{trx.details.length}} productos agregados.</p>
+        <div class="seller">
+            <span class="details__label">Atiende:</span>
+            <button class="seller__button">ssadmin</button>
+        </div>
+    </div>
+    <div class="details__price">
+        <span class="details__label">Neto: <span>{{trx.neto}}</span></span>
+        <span class="details__label">Dscto: 
+            <input #discountInput class="details__input"
+                [disabled]="!isDisabledInput" type="number" [(ngModel)]="trx.discount" (input)="updateDiscount()"
+                (focus)="selectText($event)" (keyup.enter)="onEnter(discountInput)" />
+        </span>
+        <span class="details__label">Total: <span>{{trx.total}}</span></span>
+    </div>
+</div>
+
+<section class="payment">
+    <div class="payment__header">
+        <div class="payment__details">
+            <form class="payment__form" [formGroup]="optionPay">
+                <select class="payment__select" id="methodPay" formControlName="methodPay">
+                    <option class="payment__option" *ngFor="let c of optionsPay" ngValue={{c}}>{{c}}</option>
+                </select>
+            </form>
+            <button class="payment__add" [disabled]="!isDisabledInput" (click)="addPayPart()">
+                <mat-icon class="payment__icon">add</mat-icon>
+            </button>
+        </div>
+        <div *ngIf="showDebt>0 && showDebt<=trx.total" class="payment__details">
+            <span class="payment__calculation">Por pagar: {{showDebt}}</span>
+        </div>
+        <div *ngIf="showDebt==0 && moneyTurned!=0" class="payment__details">
+            <span class="payment__calculation">Pago excedido: {{moneyTurned}}</span>
+        </div>
+    </div>
+    <div *ngIf="this.defaultOptionPay=='Contado'" class="payment__counted">
+        <div class="payment__parts">
+            <div class="payment__static">
+                <form class="payment__form" [formGroup]="typePay">
+                    <div class="payment__method">
+                        <select class="details__select" formControlName="pay" id="pay">
+                            <option *ngFor="let method of paymentMethods" [value]="method">{{ method }}</option>
+                        </select>
+                    </div>
+                </form>
+                <input #entryInput class="pay__input-money" type="number" placeholder=" " [disabled]="!isDisabledInput"
+                    [(ngModel)]="moneyInput" (input)="updatePayment(moneyInput)" (focus)="selectText($event)"
+                    (keyup.enter)="onEnter(entryInput)">
+            </div>
+            <div class="pay_debt">
+                <div *ngIf="turnet==true && moneyTurned!=0" class="pay__money-turned">
+                    <label class="pay__span">Vuelto: {{ moneyTurned }}</label>
+                </div>
+            </div>
+        </div>
+        <div class="pay__contain-bucle">
+            <div *ngFor="let payment of trx.payments.slice(1); let i = index" class="payment__parts">
+                <div class="payment__static">
+                    <form class="payment__form" [formGroup]="typePay">
+                        <div class="payment__method">
+                            <select class="details__select" [(ngModel)]="payment.method"
+                                [ngModelOptions]="{standalone: true}">
+                                <option *ngFor="let method of paymentMethods" [value]="method">
+                                    {{ method }}
+                                </option>
+                            </select>
+                        </div>
+                    </form>
+                    <input #amountInput class="pay__input-money" type="number" placeholder=""
+                        [(ngModel)]="payment.amount" (input)="updatePayment(payment);" (focus)="selectText($event)"
+                        (keyup.enter)="onEnter(amountInput)">
+                </div>
+                <div class="debt">
+                    <button (click)="showMetohd(payment)" class="remove-btn">
+                        <svg class="dialog__icon dialog__icon--modifier">
+                            <use xlink:href="/images/icons.svg#close"></use>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="this.defaultOptionPay!='Contado'" class="credit">
+        <div class="credit__item">
+            <div class="calendar">
+                <span>Vence:</span>
+                <div class="calendar__container">
+                    <input matInput [matDatepicker]="picker" placeholder="Fecha inicial" class="calendar__input" [value]="currentDate">
+                    <button mat-icon-button (click)="picker.open()" aria-label="Open calendar" class="calendar__button">
+                        <mat-icon class="calendar__icon">event</mat-icon>
+                    </button>
+                    <mat-datepicker #picker></mat-datepicker>
+                </div>
+            </div>
+            <div class="credit__amount">
+                <span>Inicial:</span>
+                <input #entryInput class="credit__input" type="number" placeholder=" " [disabled]="!isDisabledInput"
+                [(ngModel)]="moneyInput" (input)="updatePayment(moneyInput)" (focus)="selectText($event)" type="number" placeholder="0"
+                (keyup.enter)="onEnter(entryInput)">
+            </div>
+        </div>
+        <div class="credit__item">
+            <button class="credit__button" (click)="isCredit=true">[+ Más Información]</button>
+        </div> 
+    </div>
+</section>
+
+<div class="details__bottom">
+    <div class="details__client">
+        <span>Cliente:</span>
+        <button class="details__button details__actions-button details__button--client"
+            (click)="editClient(trx.client)">
+            <svg class="details__icon-client">
+                <use xlink:href="/images/icons.svg#person"></use>
+            </svg>
+            <span class="details__name" *ngIf="trx.client.name; else noCliente">{{ trx.client.name }}</span>
+            <ng-template #noCliente>
+                <span><i>--</i></span>
+            </ng-template>
+        </button>
+    </div>
+    <form class="payment__form" [formGroup]="typeVoucher">
+        <span>Comprobante:</span>
+        <div class="details__form-container">
+            <select class="form__voucher" formControlName="voucher" id="voucher" (change)="onSelectedVoucher($event)">
+                <option class="details__option" *ngFor="let type of voucherTypes" [value]="type.name">{{type.name}}</option>
+            </select>
+            <svg class="details__icon">
+                <use xlink:href="/images/icons.svg#card"></use>
+            </svg>
+        </div>
+    </form>
+</div>
+<div class="details__button-container">
+    <button class="details__button details__button--annular" (click)="isclean=true;">
+        <span>Limpiar</span>
+    </button>
+    <button *ngIf="defaultOptionPay=='Contado'" class="details__button details__button--configure" (click)="payToVoucher()">
+        Pagar
+    </button>
+    <button *ngIf="defaultOptionPay!='Contado'" class="details__button details__button--configure" (click)="payToVoucher()">
+        Guardar
+    </button>
+</div>
+
+<app-notification #notification></app-notification>
+
+
+<div class="dialog__overlay" *ngIf="showClientDialog"></div>
+<div class="dialog" *ngIf="showClientDialog">
+    <div class="dialog__header">
+        <p class="dialog__title">Cliente</p>
+        <button class="dialog__button-close" (click)="showClientDialog=false">
+            <svg class="dialog__icon dialog__icon--modifier">
+                <use xlink:href="/images/icons.svg#close"></use>
+            </svg>
+        </button>
+    </div>
+    <div class="dialog__body">
+        <div class="dialog__form">
+            <label class="dialog__label" for="title">Documento</label>
+            <form [formGroup]="typeDocument">
+                <div class="payment__method">
+                    <div class="details__input-group">
+                        <input #documentInput class="dialog__input-form" formControlName="documentNumber"
+                            [placeholder]="placeholderText" (input)="restrictInput($event)" (focus)="selectText($event)"
+                            (keyup.enter)="onEnter(documentInput)"
+                            [attr.type]="previousDocumentType === 'DNI' || previousDocumentType === 'RUC' ? 'number' : 'text'" />
+                        <button type="button" class="details__dropdown-btn" (click)="showDropdown=!showDropdown;">▼</button>
+                    </div>
+                    <div class="details__dropdown" *ngIf="showDropdown">
+                        <div class="details__dropdown-option" (click)="selectOption('DNI')">DNI (8 dígitos)</div>
+                        <div class="details__dropdown-option" (click)="selectOption('RUC')">RUC (11 dígitos)</div>
+                        <div class="details__dropdown-option" (click)="selectOption('Carnet')">Carnet de extranjería (12
+                            dígitos)</div>
+                        <div class="details__dropdown-option" (click)="selectOption('Pasaporte')">Pasaporte (12 dígitos)
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="dialog__form">
+            <label class="dialog__label" for="title">Nombre</label>
+            <input #nameInput class="dialog__input" for="nombre" [placeholder]="trx.client.name"
+                (keyup.enter)="onEnter(nameInput)" disabled />
+        </div>
+        <div class="dialog__actions">
+            <button class="dialog__button dialog__button--set">
+                <svg class="dialog__icon dialog__icon--modifier">
+                    <use xlink:href="/images/icons.svg#search"></use>
+                </svg>
+                Buscar
+            </button>
+            <button class="dialog__button dialog__button--set" (click)="showClientDialog=false">
+                <svg class="dialog__icon dialog__icon--modifier">
+                    <use xlink:href="/images/icons.svg#save"></use>
+                </svg>
+                Guardar
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- limpiar venta -->
+<div class="dialog__overlay" *ngIf="isclean"></div>
+<div class="dialog" *ngIf="isclean">
+    <div class="dialog__close">
+        <button class="dialog__button-close" (click)="isclean=false">
+            <svg class="dialog__icon dialog__icon--modifier">
+                <use xlink:href="/images/icons.svg#close"></use>
+            </svg>
+        </button>
+    </div>
+    <div class="dialog__body">
+        <p class="dialog__text">¿Estás seguro de que deseas limpiar el proceso de venta?
+            Todos los elementos seleccionados serán eliminados.</p>
+        <div class="dialog__actions">
+            <button class="dialog__button dialog__button--clean" (click)="cleanTrx()">
+                <svg class="dialog__icon dialog__icon--modifier">
+                    <use xlink:href="/images/icons.svg#clean"></use>
+                </svg>
+                Sí, limpiar
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- eliminar método de pago -->
+<div class="dialog__overlay" *ngIf="isDeleteMethod"></div>
+<div class="dialog" *ngIf="isDeleteMethod">
+    <div class="dialog__close">
+        <button class="dialog__button-close" (click)="isDeleteMethod=false">
+            <svg class="dialog__icon dialog__icon--modifier">
+                <use xlink:href="/images/icons.svg#close"></use>
+            </svg>
+        </button>
+    </div>
+    <div class="dialog__body">
+        <p class="dialog__text">¿Realmente desea quitar el método de pago?</p>
+        <div class="dialog__actions">
+            <button class="dialog__button dialog__button--clean" (click)="removePayPart()">
+                <svg class="dialog__icon dialog__icon--modifier">
+                    <use xlink:href="/images/icons.svg#delete"></use>
+                </svg>
+                Sí, Quitar
+            </button>
+        </div>
+    </div>
+</div>
+
+<div class="dialog__overlay" *ngIf="isCredit"></div>
+<div class="dialog" *ngIf="isCredit">
+    <div class="dialog__close">
+        <button class="dialog__button-close" (click)="isCredit=false">
+            <svg class="dialog__icon dialog__icon--modifier">
+                <use xlink:href="/images/icons.svg#close"></use>
+            </svg>
+        </button>
+    </div>
+    <div class="quotas">
+        <div class="quotas__options">
+            <label class="quota__type">
+                <input class="quotas__checkbox" type="checkbox" [(ngModel)]="isChecked">
+                Cuotas automáticas
+            </label>              
+            <span *ngIf="!isChecked">Capital + Interés: 0.00</span>
+        </div>
+        <span>Total Deuda: {{showDebt}}</span>
+        <div class="quota__trigger" *ngIf="!isChecked">
+            <button mat-icon-button (click)="addQuota()" class="quota__button">
+                <mat-icon class="quota__icon">add</mat-icon>
+                Añadir Cuota
+            </button>
+            <div class="quota__items">
+                <div class="quota__item" *ngFor="let i of quotasManual">
+                    <span>{{ i }}</span>
+                    <ng-container *ngIf="i !== 'F. Vencimiento:'; else vencimientoTemplate">
+                        <input class="quota__input" type="number">
+                    </ng-container>
+                    <ng-template #vencimientoTemplate>
+                        <div class="quota__calendar">
+                            <input matInput [matDatepicker]="picker" placeholder="Fecha inicial" class="quota__input" [value]="currentDate">
+                            <button mat-icon-button (click)="picker.open()" aria-label="Open calendar" class="calendar__button">
+                                <mat-icon class="calendar__icon">event</mat-icon>
+                            </button>
+                            <mat-datepicker #picker></mat-datepicker>
+                        </div>
+                    </ng-template>
+                </div>
+            </div>
+        </div>
+        <div class="quota__trigger" *ngIf="isChecked">
+            <button mat-icon-button (click)="addQuota()" class="quota__button">
+                <mat-icon class="quota__icon">shuffle</mat-icon>
+                Cuotas automáticas
+            </button>
+            <div class="quota__items">
+                <div class="quota__item" *ngFor="let i of quotasAutomatics">
+                    <span>{{i.label}} </span>
+                    <ng-container >
+                        <input class="quota__input" type="text" [(ngModel)]="i.value">
+                    </ng-container>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="quota__action">
+        <button class="dialog__button dialog__button--blue" (click)="deleteProduct()">
+            <mat-icon class="quota__icon">payments</mat-icon>
+            Registrar
+        </button>
+    </div>
+</div>
+
+<div class="dialog__overlay" *ngIf="showModifierDialog"></div>
+<div class="dialog" *ngIf="showModifierDialog">
+    <div class="dialog__header">
+        <p class="dialog__title">Editar</p>
+        <button class="dialog__button-close" (click)="closeProductDialog()">
+            <svg class="dialog__icon dialog__icon--modifier">
+                <use xlink:href="/images/icons.svg#close"></use>
+            </svg>
+        </button>
+    </div>
+    <div class="dialog__body">
+        <div class="dialog__form-row">
+            <div class="dialog__field-group">
+                <label class="dialog__label" for="cantidad">Cantidad</label>
+                <div class="details__amount">
+                    <button class="button__increment" (click)="decreaseQuantity()">&#9660;</button>
+                    <input #incrementInput class="dialog__input-dialog text-centered" type="number"
+                        [(ngModel)]="detailEdit.quantity" min="1" (focus)="selectText($event)"
+                        (keyup.enter)="onEnter(incrementInput)" />
+                    <button class="button__increment" (click)="increaseQuantity()">&#9650;</button>
+                </div>
+            </div>
+            <label class="dialog__label dialog__label--size" for="NIUx">
+                <p>NIU x</p>
+            </label>
+            <div class="dialog__field-group">
+                <label class="dialog__label" for="title">Precio</label>
+                <input #priceProductInput class="dialog__input-dialog text-centered" type="number"
+                    [(ngModel)]="detailEdit.product.unitprice" (focus)="selectText($event)"
+                    (keyup.enter)="onEnter(priceProductInput)" />
+            </div>
+        </div>
+        <div class="dialog__form">
+            <label class="dialog__label" for="title">Nombre</label>
+            <input #nameProductInput class="dialog__input" type="text" [(ngModel)]="detailEdit.product.name"
+                (focus)="selectText($event)" disabled (keyup.enter)="onEnter(nameProductInput)" />
+        </div>
+        <div class="dialog__actions">
+            <button class="dialog__button dialog__button--red" (click)="deleteProduct()">
+                <svg class="dialog__icon dialog__icon--modifier">
+                    <use xlink:href="/images/icons.svg#delete"></use>
+                </svg>
+                Quitar
+            </button>
+            <button class="dialog__button dialog__button--set" (click)="saveChanges()">
+                <svg class="dialog__icon dialog__icon--modifier">
+                    <use xlink:href="/images/icons.svg#save"></use>
+                </svg>
+                Guardar
+            </button>
+        </div>
+    </div>
+</div>

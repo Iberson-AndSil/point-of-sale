@@ -1,0 +1,183 @@
+<app-nav-menu [otherType]="type" (typeChange)="updateType($event)"></app-nav-menu>
+
+<section class="products" *ngIf="type=='products'"> 
+    <app-product (newInvoice)="setNewInvoice($event)" (type)="setDialogType($event)"></app-product>
+</section>
+
+<section class="details" *ngIf="type=='home'|| type=='hm'">
+    <app-details [sales]="sales" (salesEmitter)="receiveSales($event)" (type)="setDialogType($event)"></app-details>
+</section>
+
+<app-notification #notification></app-notification>
+
+<section class="scanner" *ngIf="type=='scanner'">
+    <app-barcode (codeScanner)="getValuescanner($event)"></app-barcode>
+</section>
+
+<section class="vaucher" *ngIf="type=='voucher'">
+    <app-invoice [isPrinter]="printer" (type)="setDialogType($event)"></app-invoice>
+    <div class="details__button-container">
+        <button class="details__button details__button--annular no-print" (click)="newTrx()">
+            <span class="details__label">Nuevo</span>
+        </button>
+        <button class="details__button details__button--configure no-print" (click)="showPrinter()">
+            Imprimir
+        </button>
+    </div>
+</section>
+
+<section id="sales" class="sales" *ngIf="type=='sales'">
+    <div class="sales__search" [formGroup]="searchForm">
+        <div class="sales__toggle">
+        <mat-form-field class="sales_date">
+            <mat-label style="font-size: 1.2rem;">{{search}}</mat-label>
+            <mat-date-range-input [formGroup]="searchForm" [rangePicker]="picker">
+              <input matStartDate formControlName="start" placeholder="">
+              <input matEndDate formControlName="end" placeholder="">
+            </mat-date-range-input>
+            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-date-range-picker #picker></mat-date-range-picker>
+        </mat-form-field>
+        <button  type="button" class="sales__button sales__button--search"id="toggleButton" (click)="toggleDropdown()">
+            <i id="arrowIcon" class="fa-solid fa-angle-down fa-flip-horizontal fa-lg" style="color: #007bff; font-size: 1.5em;"></i>
+        </button>
+        </div>
+        <div id="dropdown" class="dropdown" *ngIf="isExpanded">
+            <input #searchInput class="sales__input" type="text" formControlName="query" placeholder="Buscar" [(ngModel)]="search" (focus)="selectText($event)" (keyup.enter)="onEnter(searchInput)"/>
+            <button  type="button" class="sales__button sales__button--search" (click)="onSearch();toggleDropdown()">
+                <svg class="sales__icon-search">
+                    <use xlink:href="/images/icons.svg#search"></use>
+                </svg>
+            </button>
+        </div>
+    </div>
+    <div id="message" class="details__container" *ngIf="!sales || sales.length === 0">
+        <i>¡Aún no relizaste una venta!</i>
+    </div>
+
+    
+    <div id="container" *ngIf="sales.length > 0;" class="sales__container">  
+            <div class="sales__list-item" *ngFor="let sale of sales"> 
+                <div class="sales__info" (click)="togglePanel(sale.trxid!!)">
+                    <div class="sales__contain-circle">
+                        <p *ngIf="sale.voucherid===1"class="sales__circle">B</p>
+                        <p *ngIf="sale.voucherid===2"class="sales__circle">F</p>
+                        <p *ngIf="sale.voucherid===3"class="sales__circle">N</p>
+                    </div>
+                    <div class="sales__details">
+                        <p class="sales__details--parts"><span>{{ sale.client.name }}</span> <span>S/{{ sale.total}}</span></p>
+                        <p class="sales__details--parts"><span>{{ sale.trxid }}</span><span> Pagado</span><span>{{sale.date | date: 'dd/MM/yy HH:mm' }}</span></p>
+                    </div>
+                </div>
+                <div *ngIf="openedPanels === sale.trxid" class="sales__panel">
+                    <button class="sales__button sales__button--ventas">
+                        <span class="material-icons">payments</span>
+                    </button>
+                    <button class="sales__button sales__button--ventas" (click)="editFactura(sale)">
+                        <span class="material-icons">edit</span>
+                    </button>
+                    <button class="sales__button sales__button--ventas" (click)="duplicateInvoice(sale)">
+                        <span class="material-icons">file_copy</span>
+                    </button>
+                    <button class="sales__button sales__button--ventas" (click)="setDialogType('change')">
+                        <span class="material-icons">change_circle</span>
+                    </button>
+                    <button class="sales__button sales__button--ventas">
+                        <span class="material-icons">email</span>
+                    </button>
+                    <button class="sales__button sales__button--ventas" (click)="setVoucher()">
+                        <span class="material-icons">print</span>
+                    </button>
+                    <button class="sales__button sales__button--ventas">
+                        <span class="material-icons">cloud_upload</span>
+                    </button>
+                    <button class="sales__button sales__button--ventas" (click)="openDelete(sale.trxid!!)">
+                        <span class="material-icons">delete</span>
+                    </button>
+                </div>
+            </div>
+    </div>
+    <div class="sales__foot" *ngIf="sales.length > 0;">
+        <mat-paginator class="sales__foot-container" [length]="sales.length"
+            [pageSize]="10"
+            [hidePageSize]="true"
+            aria-label="Selecciona:">
+        </mat-paginator>
+    </div>
+</section>
+
+<!-- cambio -->
+<section class="change" *ngIf="type=='change'">
+    <div class="change__container">
+        <div class="change__panel">
+            <div class="change__panel-header" (click)="panel()">
+                <div class="change__header-content">
+                    <span class="change__title">Cliente</span>
+                    <button class="change__toggle-button">{{ isOpen ? '&#9650;' : '&#9660;' }}</button>
+                </div>
+                <span class="change__client">--</span>
+            </div>
+            <div class="change__expansion">
+                <div class="change__panel-body" *ngIf="isOpen">
+                    <div class="change__form-field">
+                        <input class="change__input" type="text" [(ngModel)]="searchTerm" placeholder="Buscar"
+                            (focus)="selectText($event)">
+                        <button class="change__button change__button--search" (click)="onClientSearch()">
+                            <svg class="change__icon">
+                                <use xlink:href="/images/icons.svg#search"></use>
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="change__list">
+                        <div *ngFor="let trx of sales">
+                            <div class="change__person">
+                                <p class="product__property">{{ trx.client.id }}</p>
+                                <p class="product__property">{{ trx.client.name }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <form class="change__form" [formGroup]="myForm">
+            <div class="change__form-container">
+                <select class="change__select" formControlName="opcion" id="opcion">
+                    <option class="change__option" value="opcion1">Factura</option>
+                    <option class="change__option" value="opcion2">Boleta</option>
+                </select>
+                <svg class="change__icon">
+                    <use xlink:href="/images/icons.svg#card"></use>
+                </svg>
+            </div>
+        </form>
+    </div>
+    <div class="change__button-container">
+        <button class="change__button change__button--cancel">
+            Cancelar
+        </button>
+        <button class="change__button change__button--save">
+            Guardar
+        </button>
+    </div>
+</section>
+
+<div class="dialog__overlay" *ngIf="showDeleteModal"></div>
+<div class="dialog" *ngIf="showDeleteModal">
+    <div class="dialog__header">
+        <p class="dialog__title">Eliminar Comprobante</p>
+    </div>
+    <div class="dialog__body">
+        <p>
+            Está seguro de eliminar a {{idF}}
+        </p>
+        <div class="dialog__actions-delete">
+            <button class="dialog__underline-button" (click)="delete()">
+                Eliminar
+            </button>
+            <button class="dialog__underline-button" (click)="closeDelete()">
+                Cancelar
+            </button>
+        </div>
+    </div>
+</div>

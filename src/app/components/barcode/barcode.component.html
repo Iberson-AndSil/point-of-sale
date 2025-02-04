@@ -1,0 +1,16 @@
+<div class="scanner">
+  <zxing-scanner class="scanner__camera" #scanner [enable]="(enable$ | async) ?? false" 
+    [device]="(selectedDevice$ | async) ?? undefined"
+    [formats]="allowedFormats" (scanSuccess)="scanSuccess$.next($event)" 
+    (scanError)="scanError($event)">
+  </zxing-scanner>
+
+  <div *ngIf="scanError$ | async as error" class="error-message">
+    <p>Error: {{ error }}</p>
+  </div>
+
+  <div *ngIf="scanSuccess$">
+    <h3>Código Escaneado:</h3>
+    <p>{{ this.scanSuccess$.getValue() }}</p>
+  </div>
+</div>

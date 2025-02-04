@@ -1,0 +1,80 @@
+<div id="print-invoice" class="container">
+    <div class="voucher__nav">
+        <p class="voucher__label-top"><b>LEAD WORKING PARTNER SAC</b></p>
+        <p *ngIf="trx.voucherid == 1" class="voucher__label">De: LEAD WORKING PARTNER SAC</p>
+        <p class="voucher__label"> <b>RUC: 20573215045</b></p>
+        <p class="voucher__label">Dirección: JR. AREQUIPA NRO. 1085</p>
+        <p class="voucher__label">Lima - Lima - Independencia</p>
+        <p *ngIf="trx.voucherid != 3" class="voucher__label"> <b>{{trx.voucher.toUpperCase()}} DE VENTA ELECTRÓNICA</b></p>
+        <p *ngIf="trx.voucherid == 3" class="voucher__label"> <b>{{trx.voucher.toUpperCase()}}</b></p>
+        <p class="voucher__label"><b>BD-10-00000040</b></p>
+    </div>
+    <div class="voucher__info">
+        <p class="voucher__label">Atiende: ssadmin Donca ERP</p>
+        <p class="voucher__label">Fecha y Hora: {{ trx.date | date: 'yyyy-MM-dd HH:mm:ss' }}</p>
+        <p class="voucher__label">Cliente: {{ trx.client.name }}</p>
+        <p *ngIf="trx.voucherid == 2" class="voucher__label">RUC: {{trx.client.identitynumber}}</p>
+        <p *ngIf="trx.voucherid != 2" class="voucher__label">DNI: {{trx.client.identitynumber}}</p>
+        <p class="voucher__label">Dirección: {{trx.client.address}}</p>
+        <p class="voucher__label">Condición: Contado</p>
+        <p class="voucher__label">Obs.: -</p>
+        <div class="voucher__header">
+            <p class="voucher__unit">C.</p>
+            <p *ngIf="trx.voucherid == 1" class="voucher__unit">UM</p>
+            <p class="voucher__detail">Detalle</p>
+            <p class="voucher__unit">P.U</p>
+            <p class="voucher__unit">Imp</p>
+        </div>
+        <div *ngFor="let detail of trx.details" class="voucher__header">
+            <p class="voucher__unit">{{ detail.quantity }}</p>
+            <p *ngIf="trx.voucherid == 1" class="voucher__unit">{{ detail.product.unitmeasure }}</p>
+            <p class="voucher__detail">{{ detail.product.name }}</p>
+            <p class="voucher__unit">{{ detail.product.unitprice }}</p>
+            <p class="voucher__unit">{{ detail.newPrice }}</p>
+        </div>
+        <div class="voucher__debt">
+            <div *ngIf="trx.voucherid != 3" class="voucher__pie">
+                <p class="voucher__label"><b>SUBTOTAL:</b></p>
+                <p class="voucher__label">{{ trx!.neto }}</p>
+            </div>
+            <div class="voucher__pie">
+                <p class="voucher__label"><b>DESCUENTO:</b></p>
+                <p class="voucher__label">{{ trx!.discount }}</p>
+            </div>
+            <div *ngIf="trx.voucherid != 3" class="voucher__pie">
+                <p class="voucher__label"><b>IGV(18%):</b></p>
+                <p class="voucher__label">{{ trx!.neto }}</p>
+            </div>
+            <div class="voucher__pie">
+                <p class="voucher__label"><b>TOTAL VENTA:</b></p>
+                <p class="voucher__label">{{ trx!.total }}</p>
+            </div>
+            <div *ngIf="trx.voucherid == 3" class="voucher__pie">
+                <p class="voucher__label"><b>EFECTIVO:</b></p>
+                <p class="voucher__label">{{ trx!.total }}</p>
+            </div>
+        </div>
+        <div class="voucher_toText">
+            <p>SON: UN Y 00/100 SOL</p>
+        </div>
+        <div *ngIf="trx.voucherid == 3">
+            <p class="voucher__foot-signature">----------------------------</p>
+            <p class="voucher__foot-according">RECIBÍ CONFORME</p>
+            <p class="voucher__foot-name">NOMBRE Y DNI</p>
+        </div>
+        <div *ngIf="trx.voucherid == 2">
+            <p class="voucher__foot-according"><strong>LEYENDA</strong></p>
+            <p class="voucher__foot-name">2001: BIENES TRANSFERIDOS EN LA AMAZONÍA REGIÓN SELVA PARA SER CONSUMIDOS EN LA MISMA</p>
+        </div>
+        <div class="voucher__foot">
+            <p *ngIf="trx.voucherid == 3" class="voucher__foot-according">NO SE ACEPTAN DEVOLUCIONES SOLO CAMBIO</p>
+            <p class="voucher__foot-text">¡GRACIAS POR SU VISITA LO ESPERAMOS PRONTO!</p>
+        </div>
+        <div *ngIf="trx.voucherid != 3">
+            <img class="voucher__foot-according" src="https://example.com/qr-code.png" alt="Código QR" width="150" height="150">
+            <p class="voucher__foot-according">Verifica tu comprobante electrónico en: https://facturaloconlwp.com/20573215045</p>
+            <p class="voucher__foot-according">Bienes trasferidos en la Amazonía para ser consumidos en la Misma</p>
+        </div>
+    </div>
+    <button (click)="printInvoice()">Imprimir</button>
+</div>

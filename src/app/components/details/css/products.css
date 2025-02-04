@@ -1,0 +1,115 @@
+.product {
+    height: 40%;
+    overflow-y: auto;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+.product__list {
+    margin-top: .5rem;
+    margin-bottom: .5rem;
+    padding-left: 0.7rem;
+    padding-right: 0.7rem;
+}
+
+.product__details {
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    align-items: center;
+    border-bottom: 1px #e4e4e4 solid;
+}
+
+.product__none {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1rem;
+    color: #989898;
+}
+
+.product__label {
+    margin-top: 0.4rem;
+    margin-bottom: 0;
+    white-space: nowrap;
+}
+
+.product__price {
+    text-align: end;
+}
+
+.product__newPrice {
+    margin-top: 0.4rem;
+    margin-bottom: 0;
+    background-color: var(--color-purple);
+    padding: .2rem;
+    color: var(--color-white);
+    display: inline;
+}
+
+.details {
+    display: flex;
+    justify-content: space-between;
+}
+
+.details__seller {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-left: 1rem;
+    padding-top: 0;
+    border-top: solid var(--color-purple) 1px;
+}
+
+.seller {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.seller__button {
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    color: var(--color-white);
+    padding-top: .8rem;
+    padding-bottom: .8rem;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 5vh;
+    border-radius: 10px;
+    width: 50%;
+    background-color: var(--color-griss);
+}
+
+.details__price {
+    width: 35%;
+    border-top: 2px solid var(--color-purple);
+    padding-right: 1rem;
+}
+
+.details__label {
+    height: 1.7rem;
+    width: 100%;
+    color: black;
+    text-align: center;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1rem;
+}
+
+.details__input {
+    width: 40%;
+    border: none;
+    text-align: end;
+    font-size: 1rem;
+    border-bottom: 2px var(--color-blue) solid;
+    outline: none;
+    padding-right: 0;
+    height: .5rem;
+}

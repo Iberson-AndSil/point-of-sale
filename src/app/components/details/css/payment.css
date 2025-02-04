@@ -1,0 +1,100 @@
+.payment{
+    height: 25%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: start;
+    border-top: 1px solid rgb(204, 202, 202);
+    background-color: #dddada;
+}
+
+.payment__header{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    background-color: #6C757D;
+    padding-top: .3rem;
+    padding-bottom: .3rem;
+}
+
+.payment__details{
+    width: 48%;
+    display: flex;
+    margin-left: .5rem;
+}
+
+.payment__form{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 90%;
+}
+
+.payment__select{
+    padding: 4px;
+    font-size: 16px;
+    border: none;
+    background-color: #6C757D;
+    color: white;
+}
+
+.payment__option{
+    font-size: 14px;
+}
+
+.payment__add{
+    border: none;
+    cursor: pointer;
+    border-radius: 25px;
+    height: 1.7rem;
+    margin-left: 2rem;
+    background-color: #e4e4e4;
+    display: flex;
+    flex-direction: row;
+    justify-content: end;
+    align-items: baseline;
+}
+
+.payment__icon{
+    width: 2rem;
+    height: 2rem;
+    color: #6C757D;
+}
+
+.payment__calculation{
+    color: white;
+    display: flex;
+    align-items: center;
+}
+
+.payment__counted{
+    width: 90%;
+    height: 100%;
+    overflow-y: auto;
+}
+
+.payment__parts{
+    width: 90%;
+    margin-top: .5rem;
+    display: flex;
+    align-items: center;
+}
+
+.payment__static{
+    width: 70%;
+    display: flex;
+    justify-content: center;
+    align-items: end;
+    height: 2.2rem;
+}
+
+.payment__method{
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    border-bottom: 2px solid var(--color-blue);
+    background-color: white;
+}
+

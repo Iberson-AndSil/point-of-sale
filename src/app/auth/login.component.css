@@ -1,0 +1,59 @@
+.main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: url('https://demo-hotel.facturaloconlwp.com/demo/images/fondo-simba.jpg') no-repeat center center fixed;
+    background-size: cover;
+  }
+
+  .login{
+    border: none;
+    border-bottom: 1px solid #ccc;
+    outline: none;
+    width: 100%;
+    font-size: 16px;
+  }
+  
+  .login:focus{
+    border: none;
+    border-bottom: 1px solid #62bbee;
+  }
+  
+  .login-form{
+    margin: 0 auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 10px;
+    line-height: 2;
+  }
+
+  .btn-login{
+    background: linear-gradient(90deg, rgb(36, 131, 214),rgb(8, 49, 90)) !important;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+  }
+
+  .login-form-header{
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  .logo{
+    height: 10rem;
+    width: 10rem;
+  }
+
+  .form-group{
+    text-align: center;
+    margin-bottom: 10px;
+  }

@@ -1,0 +1,93 @@
+<!-- <nav class="navbar">
+    <div class="navbar__logo">MyLogo</div>
+    <input type="checkbox" id="checkbox_toggle" />
+    <label (click)="logout()"><i class="fa-solid fa-right-from-bracket"></i></label>
+</nav> --> 
+
+<nav class="menu">
+    <div class="menu__button-container menu__button--left" *ngIf="type === 'sales'">
+        <button class="menu__button" (click)="setDialogType('hm')">
+            <svg class="menu__icon menu__icon--white menu__icon--size">
+                <use xlink:href="/images/icons.svg#icon-add"></use>
+            </svg>
+        </button>
+    </div>
+    <div class="menu__button-container menu__button--left" *ngIf="type === 'products'">
+        <button class="menu__button" (click)="setDialogType('home')">
+            <svg class="menu__icon menu__icon--white menu__icon--size">
+                <use xlink:href="/images/icons.svg#flecha"></use>
+            </svg>
+        </button>
+    </div>
+    <div class="menu__button-container menu__button--left" *ngIf="type === 'home' || type=='hm'">
+        <button class="menu__button" (click)="setDialogType('products')">
+            <svg class="menu__icon menu__icon--white menu__icon--size">
+                <use xlink:href="/images/icons.svg#card-product"></use>
+            </svg>
+
+        </button>
+        <button class="menu__button menu__button--padding" (click)="setDialogType('scanner')">
+            <svg class="menu__icon menu__icon--white menu__icon--size">
+                <use xlink:href="/images/icons.svg#icon-code-scan"></use>
+            </svg>
+        </button>
+    </div>
+    <div class="menu__button-container menu__button--left" *ngIf="type === 'scanner'">
+        <button class="menu__button" (click)="setDialogType('home')">
+            <svg class="menu__icon menu__icon--white menu__icon--size">
+                <use xlink:href="/images/icons.svg#flecha"></use>
+            </svg>
+        </button>
+    </div>
+    <span class="menu__button-container menu__label" *ngIf="type === 'home' || type=='hm'">Detalles</span>
+    <span class="menu__button-container menu__label--end" *ngIf="type === 'products'">Productos</span>
+    <span class="menu__button-container menu__label" *ngIf="type === 'sales'">Ventas</span>
+    <span class="menu__button-container menu__label--start" *ngIf="type === 'voucher'">Comprobante</span>
+    <span class="menu__button-container menu__label--start" *ngIf="type === 'pay'">Pago Comprobante</span>
+    <span class="menu__button-container menu__label--start" *ngIf="type === 'change'">Convertir Comprobante</span>
+    <span class="menu__button-container menu__label--end" *ngIf="type === 'scanner'">Scanner</span>
+    <div class="menu__button-container menu__button--right" *ngIf="type === 'sales'">
+        <button class="menu__button">
+            <svg class="menu__icon menu__icon--white menu__icon--size">
+                <use xlink:href="/images/icons.svg#logout"></use>
+            </svg>
+        </button>
+    </div>
+    <!-- <div class="menu__button-container menu__button--right" *ngIf="type === 'products'">
+        <button class="menu__button">
+            <svg class="menu__icon menu__icon--white menu__icon--size">
+                <use xlink:href="/images/icons.svg#icon-code-scan"></use>
+            </svg>
+        </button>
+    </div> -->
+
+    <!-- (click)="createFactura('sales')" -->
+    <div class="menu__button-container menu__button--right" *ngIf="type === 'voucher'" (click)="setDialogType('sales')">
+        <button class="menu__button">
+            <svg class="menu__icon menu__icon--white menu__icon--size">
+                <use xlink:href="/images/icons.svg#icon-home"></use>
+            </svg>
+        </button>
+    </div>
+    <div class="menu__button-container menu__button--right" *ngIf="type === 'home' || type=='hm'" (click)="setDialogType('sales')">
+        <button class="menu__button">
+            <svg class="menu__icon menu__icon--white menu__icon--size">
+                <use xlink:href="/images/icons.svg#icon-home"></use>
+            </svg>
+        </button>
+    </div>
+    <div class="menu__button-container menu__button--right" *ngIf="type === 'pay'" (click)="setDialogType('sales')">
+        <button class="menu__button">
+            <svg class="menu__icon menu__icon--white menu__icon--size">
+                <use xlink:href="/images/icons.svg#icon-home"></use>
+            </svg>
+        </button>
+    </div>
+    <div class="menu__button-container menu__button--right" *ngIf="type === 'change'" (click)="setDialogType('sales')">
+        <button class="menu__button">
+            <svg class="menu__icon menu__icon--white menu__icon--size">
+                <use xlink:href="/images/icons.svg#icon-home"></use>
+            </svg>
+        </button>
+    </div>
+</nav>

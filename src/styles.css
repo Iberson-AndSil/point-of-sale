@@ -1,0 +1,43 @@
+@import '@angular/material/prebuilt-themes/indigo-pink.css';
+
+:root {
+    --color-blue: #2688FF;
+    --color-purple: #547399;
+    --color-orange: #fa9a00;
+    --color-red: #FF3A26;
+    --color-green: #28A745;
+
+    --color-griss: #6C757D;
+
+    --color-white: white;
+    --mdc-filled-text-field-container-color: white;
+}
+
+* {
+    user-select: none;
+}
+
+html,
+
+app-root{
+    height: 100%;
+}
+app-sales{
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+app-nav-menu{
+    display: flex;
+    flex-direction: column;
+}
+
+body {
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+    height: calc(var(--vh, 1vh) * 100);
+}
+
+.mat-mdc-form-field-subscript-wrapper {
+    display: none;
+  }
