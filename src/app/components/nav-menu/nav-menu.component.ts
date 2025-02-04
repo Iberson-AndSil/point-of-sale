@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output, SimpleChanges } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthService } from '../../core/services/auth.service';
+// import { AuthService } from '../../core/services/auth.service';
 import { NgOptimizedImage, CommonModule } from '@angular/common'
 
 @Component({
@@ -16,17 +16,16 @@ export default class NavMenuComponent {
 
   //@Output() onLogOutEvent = new EventEmitter<void>();
 
-  constructor(private authService: AuthService, private router: Router) {}
+  // constructor(private authService: AuthService, private router: Router) {}
 
-  logout(): void {
-    this.authService.logout();
-    this.router.navigate(['/login']);
-    //this.onLogOutEvent.emit();
-  }
+  // logout(): void {
+  //   this.authService.logout();
+  //   this.router.navigate(['/login']);
+  // }
 
-  isAuthenticated(): boolean {
-    return this.authService.isAuthenticated();
-  }
+  // isAuthenticated(): boolean {
+  //   return this.authService.isAuthenticated();
+  // }
 
   @Input() otherType!: string;
   

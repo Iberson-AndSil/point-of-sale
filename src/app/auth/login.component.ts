@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 
 import { FormsModule } from '@angular/forms';
-import { AuthService } from '../core/services/auth.service';
+// import { AuthService } from '../core/services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -18,22 +18,22 @@ export default class LoginComponent {
   title = 'Sales-mobile';
   auth = {username: "", password: ""};
 
-  constructor(private authService: AuthService) {}
+  // constructor(private authService: AuthService) {}
 
-  login(): void {
-    this.authService.login(this.auth.username, this.auth.password).subscribe({
-        next: ()=>this.onLoginSuccess(),
-        error: (error) => console.log('LOGIN ERROR', error)
-    })
-  }
+  // login(): void {
+  //   this.authService.login(this.auth.username, this.auth.password).subscribe({
+  //       next: ()=>this.onLoginSuccess(),
+  //       error: (error) => console.log('LOGIN ERROR', error)
+  //   })
+  // }
 
   onLoginSuccess(): void {
     this.onLoginSuccessEvent.emit();
     
   }
 
-  authtenticated(): void {
-    this.authService.isAuthenticated();
-  }
+  // authtenticated(): void {
+  //   this.authService.isAuthenticated();
+  // }
 
 }
